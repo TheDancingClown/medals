@@ -16,6 +16,10 @@ RSpec.describe Runner, :type => :model do
     @runner.name = nil
     expect(@runner).to_not be_valid
   end
+  it "is not valid without an email" do
+    @runner.email = nil
+    expect(@runner).to_not be_valid
+  end
 
   describe "#slugify" do
     it "creates a url friendly runner name" do
