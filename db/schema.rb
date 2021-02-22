@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_113010) do
     t.string "name"
     t.string "email"
     t.string "address"
+    t.string "slug"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
