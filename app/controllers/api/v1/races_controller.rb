@@ -1,6 +1,8 @@
 module Api
   module V1
     class RacesController < ApplicationController
+      before_action :find_race, only: %i[show update destroy]
+
       def index
         races = Race.all
 
@@ -8,8 +10,8 @@ module Api
       end
 
       def show
-        if race = Race.find_by(slug: params[:slug])
-          render json: RaceSerializer.new(race, options).serialized_json
+        if @race
+          render json: RaceSerializer.new(@race, options).serialized_json
         else 
           not_found
         end
@@ -17,6 +19,7 @@ module Api
 
       def create
         race = Race.new(race_params)
+        
         if race.save
           render json: RaceSerializer.new(race).serialized_json
         else
@@ -24,10 +27,30 @@ module Api
         end
       end
 
+      def update
+        if @race.update(race_params)
+          render json: RaceSerializer.new(@race, options).serialized_json
+        else
+          render json: { error: @race.errors.messages }, status: 422
+        end
+      end
+
+      def destroy
+        if @race.destroy
+          head :no_content
+        else 
+          render json: { error: @race.errors.messages }, status: 422
+        end
+      end
+
       private
 
       def race_params
         params.require(:race).permit(:name, :date)
+      end
+
+      def find_race
+        @race = Race.find_by(slug: params[:slug])
       end
 
       def options
