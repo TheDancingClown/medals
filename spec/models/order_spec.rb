@@ -4,7 +4,7 @@ RSpec.describe Order, :type => :model do
 
   before(:each) do
     @runner = FactoryBot.create(:runner)
-    @race = FactoryBot.create(:race)
+    @race = FactoryBot.create(:half_marathon)
     @order = Order.new(
       race_id: @race.id, 
       runner_id: @runner.id

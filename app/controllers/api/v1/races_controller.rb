@@ -4,19 +4,38 @@ module Api
       def index
         races = Race.all
 
-        render json: RaceSerializer.new(races, options).serialized_json
+        render json: RaceSerializer.new(races).serialized_json
       end
 
       def show
-        race = Race.find_by(slug: params[:slug])
+        if race = Race.find_by(slug: params[:slug])
+          render json: RaceSerializer.new(race, options).serialized_json
+        else 
+          not_found
+        end
+      end
 
-        render json: RaceSerializer.new(race, options).serialized_json
+      def create
+        race = Race.new(race_params)
+        if race.save
+          render json: RaceSerializer.new(race).serialized_json
+        else
+          render json: { error: race.errors.messages }, status: 422
+        end
       end
 
       private
 
+      def race_params
+        params.require(:race).permit(:name, :date)
+      end
+
       def options
         @options ||= { include: %i[orders] }
+      end
+
+      def not_found
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
       end
     end
   end
