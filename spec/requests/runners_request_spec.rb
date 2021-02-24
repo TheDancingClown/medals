@@ -1,75 +1,76 @@
 require 'rails_helper'
 
-RSpec.describe "Races", type: :request do
+RSpec.describe "Runners", type: :request do
   before(:each) do
-    FactoryBot.create(:marathon)
+    @runner = FactoryBot.create(:runner)
   end
 
   describe "GET /index" do
     it "returns http success" do
-      get "/api/v1/races"
+      get "/api/v1/runners"
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET /:slug" do
-    it "returns http success for correct path" do
-      get "/api/v1/races/london-marathon"
+  describe "GET /:id" do
+    it "returns http success" do
+      get "/api/v1/runners/"+@runner.id.to_s
       expect(response).to have_http_status(:success)
     end
 
     it "returns an error for incorrect path" do
-      get "/api/v1/races/lon"
+      get "/api/v1/runners/lon"
       expect(response).to have_http_status(404)
     end
   end
 
   describe "POST" do
     it "returns http success for valid params" do
-      post "/api/v1/races", params: { 
-        race: { 
-          name: "Paris Marathon", 
-          date: "2019-08-17" 
+      post "/api/v1/runners", params: { 
+        runner: { 
+          name: "Paula Radcliffe", 
+          email: "paula@runner.co.uk" 
           }
         }
       expect(response).to have_http_status(:success)
     end
 
     it "returns an error for invalid params" do
-      post "/api/v1/races", params: { 
-        race: { 
-          name: "Paris Marathon" 
+      post "/api/v1/runners", params: { 
+        runner: { 
+          name: "Paula Radcliffe" 
           }
         }
       expect(response).to have_http_status(422)
     end
   end
 
-  describe "PATCH /:slug" do
+  describe "PATCH /:id" do
     it "returns http success for valid params" do
-      patch "/api/v1/races/london-marathon", params: { 
-        race: { 
-          name: "Paris Marathon", 
-          ate: "2019-08-17" 
+      patch "/api/v1/runners/"+@runner.id.to_s, params: { 
+        runner: { 
+          name: "Paula Radcliffe", 
+          email: "paula@runner.co.uk",
+          address: "RU4 4ER"  
           }
         }
       expect(response).to have_http_status(:success)
     end
 
     it "returns an error for invalid params" do
-      patch "/api/v1/races/london-marathon", params: { 
-        race: { 
-          name: "Paris Marathon",
-          date: nil
+      patch "/api/v1/runners/"+@runner.id.to_s, params: { 
+        runner: { 
+          name: "Paula Radcliffe",
+          email: nil
         }
       }
       expect(response).to have_http_status(422)
     end
   end
 
-  describe "DELETE /:slug" do
+  describe "DELETE /:id" do
     it "returns http success" do
-      delete "/api/v1/races/london-marathon"
+      delete "/api/v1/runners/"+@runner.id.to_s
       expect(response).to have_http_status(:success)
     end
   end
