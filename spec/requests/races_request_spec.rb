@@ -8,14 +8,14 @@ RSpec.describe "Races", type: :request do
   describe "GET /index" do
     it "returns http success" do
       get "/api/v1/races"
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
   end
 
   describe "GET /:slug" do
     it "returns http success for correct path" do
       get "/api/v1/races/london-marathon"
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
 
     it "returns an error for incorrect path" do
@@ -32,7 +32,7 @@ RSpec.describe "Races", type: :request do
           date: "2019-08-17" 
           }
         }
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
 
     it "returns an error for invalid params" do
@@ -53,7 +53,7 @@ RSpec.describe "Races", type: :request do
           ate: "2019-08-17" 
           }
         }
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
 
     it "returns an error for invalid params" do

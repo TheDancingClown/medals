@@ -8,14 +8,14 @@ RSpec.describe "Runners", type: :request do
   describe "GET /index" do
     it "returns http success" do
       get "/api/v1/runners"
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
   end
 
   describe "GET /:id" do
     it "returns http success" do
       get "/api/v1/runners/"+@runner.id.to_s
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
 
     it "returns an error for incorrect path" do
@@ -32,7 +32,7 @@ RSpec.describe "Runners", type: :request do
           email: "paula@runner.co.uk" 
           }
         }
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
 
     it "returns an error for invalid params" do
@@ -54,7 +54,7 @@ RSpec.describe "Runners", type: :request do
           address: "RU4 4ER"  
           }
         }
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
 
     it "returns an error for invalid params" do
