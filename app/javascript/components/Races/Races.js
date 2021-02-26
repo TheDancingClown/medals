@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
+import Race from './Race'
 
 const Races = () => {
   const [races, setRaces] = useState([])
@@ -12,14 +13,18 @@ const Races = () => {
     .catch( error => console.log(error))
   },[races.length])
 
-  const list = races.map(item => {
-      return (<li key={item.attributes.slug }>{item.attributes.name}</li>)
-    })
+  const grid = races.map(item => {
+    return (
+      <Race 
+      key={item.attributes.slug}
+      attributes={item.attributes}
+      />
+    )
+  })
 
   return (
     <div>
-      <h1>Races</h1>
-      <ul>{ list }</ul>
+      { grid }
     </div>
   )
 };

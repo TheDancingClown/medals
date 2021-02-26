@@ -4,7 +4,7 @@ module Api
       before_action :find_race, only: %i[show update destroy]
 
       def index
-        races = Race.all
+        races = Race.order(date: :desc).all
 
         render json: RaceSerializer.new(races).serialized_json
       end

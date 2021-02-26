@@ -5,7 +5,7 @@ FactoryBot.define do
   end
 
   factory :half_marathon, class: 'Race' do
-    name { "Brighton Half Marathon "}
+    name { "Brighton Half Marathon"}
     date { Date.new }
   end
 
