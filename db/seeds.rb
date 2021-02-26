@@ -12,7 +12,7 @@ races = Race.create([
     date: Date.iso8601("2019-04-28") 
   },
   {
-    name: "Brigton Half Marathon 2019",
+    name: "Brighton Half Marathon 2019",
     date: Date.iso8601("2019-02-24")
   },
   {
