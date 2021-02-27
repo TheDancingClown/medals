@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Races", type: :request do
   before(:each) do
-    FactoryBot.create(:marathon)
+    @marathon = FactoryBot.create(:marathon)
   end
 
   describe "GET /index" do
@@ -14,7 +14,7 @@ RSpec.describe "Races", type: :request do
 
   describe "GET /:slug" do
     it "returns http success for correct path" do
-      get "/api/v1/races/london-marathon"
+      get "/api/v1/races/#{@marathon.slug}"
       expect(response).to have_http_status(200)
     end
 
@@ -47,7 +47,7 @@ RSpec.describe "Races", type: :request do
 
   describe "PATCH /:slug" do
     it "returns http success for valid params" do
-      patch "/api/v1/races/london-marathon", params: { 
+      patch "/api/v1/races/#{@marathon.slug}", params: { 
         race: { 
           name: "Paris Marathon", 
           ate: "2019-08-17" 
@@ -57,7 +57,7 @@ RSpec.describe "Races", type: :request do
     end
 
     it "returns an error for invalid params" do
-      patch "/api/v1/races/london-marathon", params: { 
+      patch "/api/v1/races/#{@marathon.slug}", params: { 
         race: { 
           name: "Paris Marathon",
           date: nil
@@ -69,7 +69,7 @@ RSpec.describe "Races", type: :request do
 
   describe "DELETE /:slug" do
     it "returns http success" do
-      delete "/api/v1/races/london-marathon"
+      delete "/api/v1/races/#{@marathon.slug}"
       expect(response).to have_http_status(:success)
     end
   end

@@ -14,7 +14,7 @@ RSpec.describe "Runners", type: :request do
 
   describe "GET /:id" do
     it "returns http success" do
-      get "/api/v1/runners/"+@runner.id.to_s
+      get "/api/v1/runners/#{@runner.id}"
       expect(response).to have_http_status(200)
     end
 
@@ -47,7 +47,7 @@ RSpec.describe "Runners", type: :request do
 
   describe "PATCH /:id" do
     it "returns http success for valid params" do
-      patch "/api/v1/runners/"+@runner.id.to_s, params: { 
+      patch "/api/v1/runners/#{@runner.id}", params: { 
         runner: { 
           name: "Paula Radcliffe", 
           email: "paula@runner.co.uk",
@@ -58,7 +58,7 @@ RSpec.describe "Runners", type: :request do
     end
 
     it "returns an error for invalid params" do
-      patch "/api/v1/runners/"+@runner.id.to_s, params: { 
+      patch "/api/v1/runners/#{@runner.id}", params: { 
         runner: { 
           name: "Paula Radcliffe",
           email: nil
@@ -70,7 +70,7 @@ RSpec.describe "Runners", type: :request do
 
   describe "DELETE /:id" do
     it "returns http success" do
-      delete "/api/v1/runners/"+@runner.id.to_s
+      delete "/api/v1/runners/#{@runner.id}"
       expect(response).to have_http_status(:success)
     end
   end

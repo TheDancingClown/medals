@@ -30,7 +30,7 @@ RSpec.describe "Orders", type: :request do
   describe "DELETE /:id" do
     it "returns http success" do
       order = Order.create(runner_id: @runner.id, race_id: @race.id)
-      delete "/api/v1/orders/"+order.id.to_s
+      delete "/api/v1/orders/#{order.id}"
       expect(response).to have_http_status(:success)
     end
   end
