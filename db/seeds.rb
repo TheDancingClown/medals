@@ -49,7 +49,7 @@ orders = Order.create([
     name: "Minnie",
     date: Date.iso8601("2019-04-28"),
     time: "4:32",
-    runner_id: runners.first.id,
+    runner_id: runners.last.id,
     race_id: races.first.id,
     completed: false
   },

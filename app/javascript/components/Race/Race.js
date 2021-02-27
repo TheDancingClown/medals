@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Order from './Order'
+import Header from './Header'
 
 const Race = (props) => {
   const [race, setRace] = useState({})
@@ -10,7 +12,6 @@ const Race = (props) => {
     const url = props.match.url
     axios.get(`/api/v1/${url}`)
     .then( response => {
-      console.log(response.data.included)
       setRace(response.data)
       setOrders(response.data.included)
       setLoaded(true)
@@ -18,23 +19,31 @@ const Race = (props) => {
     .catch( error => console.log(error))
   },[])
 
-  const list = orders.map(item => {
-    return <li key={item.id}>{item.id} {item.attributes.name} {item.attributes.date} {item.attributes.time}</li>
+  const grid = orders.map(item => {
+    return (
+      <Order 
+      key={item.id}
+      id={item.id}
+      attributes={item.attributes}
+      />
+    )
   })
+
+  const Display = () => {
+    return (
+      <div>
+        <Header 
+        key={ race.data.attributes.name } 
+        attributes={ race.data.attributes }
+        />
+        { grid }
+      </div>
+    )
+  }
 
   return (
     <div>
-      {loaded && 
-      <div>
-        <div>
-          {race.data.attributes.name}
-        </div>
-      <div>
-        {race.data.attributes.date}
-      </div>
-        <ul>{list}</ul>
-      </div>
-      }
+      { loaded && <Display/> }
     </div>
   )
 }
