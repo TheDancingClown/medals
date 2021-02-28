@@ -4,7 +4,10 @@ class Race < ApplicationRecord
   validates_presence_of :name, :date
 
   before_create :slugify
+  before_update :slugify
 
+  private
+  
   def slugify
     self.slug = name.parameterize
   end

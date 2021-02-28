@@ -46,7 +46,7 @@ module Api
       private
 
       def race_params
-        params.require(:race).permit(:name, :date)
+        params.require(:race).permit(:name, :date, :slug)
       end
 
       def find_race

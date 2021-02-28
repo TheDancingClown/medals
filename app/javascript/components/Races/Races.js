@@ -16,7 +16,7 @@ const Races = () => {
   const grid = races.map(item => {
     return (
       <Race 
-      key={item.attributes.id}
+      key={item.attributes.slug}
       attributes={item.attributes}
       />
     )

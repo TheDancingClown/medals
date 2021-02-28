@@ -49,7 +49,7 @@ module Api
       end
 
       def runner_params
-        params.require(:runner).permit(:name, :email)
+        params.require(:runner).permit(:name, :email, :address)
       end
 
       def not_found

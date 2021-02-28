@@ -8,6 +8,7 @@ RSpec.describe "Runners", type: :request do
   describe "GET /index" do
     it "returns http success" do
       get "/api/v1/runners"
+
       expect(response).to have_http_status(200)
     end
   end
@@ -15,11 +16,13 @@ RSpec.describe "Runners", type: :request do
   describe "GET /:id" do
     it "returns http success" do
       get "/api/v1/runners/#{@runner.id}"
+
       expect(response).to have_http_status(200)
     end
 
     it "returns an error for incorrect path" do
       get "/api/v1/runners/lon"
+
       expect(response).to have_http_status(404)
     end
   end
@@ -32,7 +35,10 @@ RSpec.describe "Runners", type: :request do
           email: "paula@runner.co.uk" 
           }
         }
+
       expect(response).to have_http_status(200)
+      expect(Runner.find_by(name: "Paula Radcliffe")).to be
+      expect(Runner.find_by(email: "paula@runner.co.uk")).to be
     end
 
     it "returns an error for invalid params" do
@@ -41,6 +47,7 @@ RSpec.describe "Runners", type: :request do
           name: "Paula Radcliffe" 
           }
         }
+
       expect(response).to have_http_status(422)
     end
   end
@@ -54,7 +61,12 @@ RSpec.describe "Runners", type: :request do
           address: "RU4 4ER"  
           }
         }
+
       expect(response).to have_http_status(200)
+      expect(Runner.find_by(name: "Joyce Chepchumba")).to_not be
+      expect(Runner.find_by(name: "Paula Radcliffe")).to be
+      expect(Runner.find_by(email: "paula@runner.co.uk")).to be
+      expect(Runner.find_by(address: "RU4 4ER")).to be
     end
 
     it "returns an error for invalid params" do
@@ -64,6 +76,7 @@ RSpec.describe "Runners", type: :request do
           email: nil
         }
       }
+
       expect(response).to have_http_status(422)
     end
   end
@@ -71,7 +84,9 @@ RSpec.describe "Runners", type: :request do
   describe "DELETE /:id" do
     it "returns http success" do
       delete "/api/v1/runners/#{@runner.id}"
+
       expect(response).to have_http_status(:success)
+      expect(Runner.find_by(name: "Joyce Chepchumba")).to_not be
     end
   end
 end

@@ -8,6 +8,7 @@ RSpec.describe "Races", type: :request do
   describe "GET /index" do
     it "returns http success" do
       get "/api/v1/races"
+
       expect(response).to have_http_status(200)
     end
   end
@@ -15,11 +16,13 @@ RSpec.describe "Races", type: :request do
   describe "GET /:slug" do
     it "returns http success for correct path" do
       get "/api/v1/races/#{@marathon.slug}"
+
       expect(response).to have_http_status(200)
     end
 
     it "returns an error for incorrect path" do
       get "/api/v1/races/lon"
+
       expect(response).to have_http_status(404)
     end
   end
@@ -32,7 +35,10 @@ RSpec.describe "Races", type: :request do
           date: "2019-08-17" 
           }
         }
+
       expect(response).to have_http_status(200)
+      expect(Race.find_by(name: 'Paris Marathon')).to be
+      expect(Race.find_by(slug: 'paris-marathon')).to be
     end
 
     it "returns an error for invalid params" do
@@ -41,6 +47,7 @@ RSpec.describe "Races", type: :request do
           name: "Paris Marathon" 
           }
         }
+
       expect(response).to have_http_status(422)
     end
   end
@@ -50,10 +57,13 @@ RSpec.describe "Races", type: :request do
       patch "/api/v1/races/#{@marathon.slug}", params: { 
         race: { 
           name: "Paris Marathon", 
-          ate: "2019-08-17" 
+          date: "2019-08-17"
           }
         }
+
       expect(response).to have_http_status(200)
+      expect(Race.find_by(name: 'Paris Marathon')).to be
+      expect(Race.find_by(slug: 'paris-marathon')).to be
     end
 
     it "returns an error for invalid params" do
@@ -63,6 +73,7 @@ RSpec.describe "Races", type: :request do
           date: nil
         }
       }
+
       expect(response).to have_http_status(422)
     end
   end
@@ -70,7 +81,9 @@ RSpec.describe "Races", type: :request do
   describe "DELETE /:slug" do
     it "returns http success" do
       delete "/api/v1/races/#{@marathon.slug}"
+      
       expect(response).to have_http_status(:success)
+      expect(Race.find_by(name: 'London Marathon')).to_not be
     end
   end
 end

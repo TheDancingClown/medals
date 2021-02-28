@@ -22,7 +22,7 @@ module Api
       private
 
       def order_params
-        params.require(:order).permit(:runner_id, :race_id)
+        params.require(:order).permit(:runner_id, :race_id, :name, :date, :time)
       end
     end
   end
